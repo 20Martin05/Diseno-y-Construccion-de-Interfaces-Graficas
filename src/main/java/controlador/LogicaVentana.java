@@ -52,6 +52,7 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		actualizarEstadoAcciones();
 		configurarMenuContextual();
 		configurarAtajosTeclado();
+		inicializarCategorias();
 
 		// Carga los contactos almacenados al inicializar.
 		cargarContactosRegistrados();
@@ -644,5 +645,58 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 				JOptionPane.showMessageDialog(padre, "Error al escribir el archivo: " + ex.getMessage(), "Error I/O", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+
+	private void inicializarCategorias() {
+		String[] categorias = {
+				"Elija una Categoria",
+				"Familia",
+				"Amigos",
+				"Trabajo",
+				"Universidad",
+				"Clientes",
+				"Emergencias",
+				"Otros"
+		};
+		delegado.cmb_categoria.removeAllItems();
+		for (String cat : categorias) {
+			delegado.cmb_categoria.addItem(cat);
+		}
+		configurarIconosCategorias();
+	}
+
+	private void configurarIconosCategorias() {
+		Map<String, Icon> iconos = new HashMap<>();
+		iconos.put("Familia", cargarIcono("/images/icons/categories/familia.png"));
+		iconos.put("Amigos", cargarIcono("/images/icons/categories/amigos.png"));
+		iconos.put("Trabajo", cargarIcono("/images/icons/categories/trabajo.png"));
+		iconos.put("Universidad", cargarIcono("/images/icons/categories/universidad.png"));
+		iconos.put("Clientes", cargarIcono("/images/icons/categories/clientes.png"));
+		iconos.put("Emergencias", cargarIcono("/images/icons/categories/emergencias.png"));
+		iconos.put("Otros", cargarIcono("/images/icons/categories/otros.png"));
+
+		delegado.cmb_categoria.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+														  boolean isSelected, boolean cellHasFocus) {
+				JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if (value != null) {
+					String texto = value.toString();
+					label.setText(texto);
+					label.setIcon(iconos.get(texto));
+				}
+				return label;
+			}
+		});
+	}
+
+	private Icon cargarIcono(String ruta) {
+		java.net.URL url = getClass().getResource(ruta);
+		if (url != null) {
+			ImageIcon original = new ImageIcon(url);
+			Image escalada = original.getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+			return new ImageIcon(escalada);
+		}
+		return null;
 	}
 }
