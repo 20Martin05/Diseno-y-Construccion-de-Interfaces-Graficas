@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="vista.base.VentanaUI">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="0">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="1118" height="700"/>
+    </constraints>
+    <properties>
+      <background color="-1"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="panelContactos" binding="panelContactos" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="650" height="650"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="lbl_nombres_id" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="NOMBRES"/>
+            </properties>
+          </component>
+          <component id="lbl_email_id" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="EMAIL"/>
+            </properties>
+          </component>
+          <component id="txt_nombres_id" class="javax.swing.JTextField" binding="txt_nombres">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="32"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+            </properties>
+          </component>
+          <component id="txt_email_id" class="javax.swing.JTextField" binding="txt_email">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="32"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+            </properties>
+          </component>
+          <component id="lbl_telefono_id" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="TELÉFONO"/>
+            </properties>
+          </component>
+          <component id="lbl_categoria_id" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="CATEGORÍA"/>
+            </properties>
+          </component>
+          <component id="txt_telefono_id" class="javax.swing.JTextField" binding="txt_telefono">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="32"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+            </properties>
+          </component>
+          <component id="cmb_categoria_id" class="javax.swing.JComboBox" binding="cmb_categoria">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="32"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+            </properties>
+          </component>
+          <component id="lbl_buscar_id" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="BUSCAR POR NOMBRE"/>
+            </properties>
+          </component>
+          <component id="txt_buscar_id" class="javax.swing.JTextField" binding="txt_buscar">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="32"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+            </properties>
+          </component>
+          <component id="barra_id" class="javax.swing.JProgressBar" binding="barra">
+            <constraints>
+              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <stringPainted value="true"/>
+            </properties>
+          </component>
+          <scrollpane id="scrLista" binding="scrLista">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="350"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="lst_contactos_id" class="javax.swing.JTable" binding="lst_contactos">
+                <constraints/>
+                <properties>
+                  <autoCreateRowSorter value="true"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <component id="btn_add_id" class="javax.swing.JButton" binding="btn_add">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="125" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="AGREGAR"/>
+            </properties>
+          </component>
+          <component id="btn_modificar_id" class="javax.swing.JButton" binding="btn_modificar">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="125" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="MODIFICAR"/>
+            </properties>
+          </component>
+          <component id="chb_favorito_id" class="javax.swing.JCheckBox" binding="chb_favorito">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="Favorito"/>
+            </properties>
+          </component>
+          <component id="btn_eliminar_id" class="javax.swing.JButton" binding="btn_eliminar">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="125" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="ELIMINAR"/>
+            </properties>
+          </component>
+          <component id="btn_exportar_id" class="javax.swing.JButton" binding="btn_exportar">
+            <constraints>
+              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="125" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="EXPORTAR"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="panelEstadisticas" binding="panelEstadisticas" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
+        <margin top="20" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="320" height="650"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="etched" title="INFORME / ESTADÍSTICAS"/>
+        <children>
+          <scrollpane id="scrEstadisticas" binding="scrEstadisticas">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="500"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="tbl_estadisticas_id" class="javax.swing.JTextArea" binding="tbl_estadisticas">
+                <constraints/>
+                <properties>
+                  <editable value="false"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <component id="btn_actualizar_id" class="javax.swing.JButton" binding="btn_actualizar_estadisticas">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="ACTUALIZAR ESTADÍSTICAS"/>
+            </properties>
+          </component>
+          <component id="btn_limpiar_id" class="javax.swing.JButton" binding="btn_limpiar_estadisticas">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="LIMPIAR"/>
+            </properties>
+          </component>
+          <component id="btn_exportar_rep_id" class="javax.swing.JButton" binding="btn_exportar_reporte">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Comic Sans MS" size="13" style="2"/>
+              <text value="EXPORTAR REPORTE"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
