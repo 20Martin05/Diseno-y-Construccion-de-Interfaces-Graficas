@@ -35,22 +35,7 @@ public class ventana extends VentanaUI {
 		pack();
 		setLocationRelativeTo(null);
 
-		// Arreglo que contiene las categorías disponibles.
-		String[] categorias = {
-				"Elija una Categoria",
-				"Familia",
-				"Amigos",
-				"Trabajo",
-				"Universidad",
-				"Clientes",
-				"Emergencias",
-				"Otros"
-		};
-		for (String categoria : categorias) {
-			cmb_categoria.addItem(categoria);
-		}
-
-		// Instance el controlador para usar el delegado
-        new LogicaVentana(this);
-    }
+		// Instancia el controlador para inicializar lógica y componentes
+		new LogicaVentana(this);
+	}
 }
