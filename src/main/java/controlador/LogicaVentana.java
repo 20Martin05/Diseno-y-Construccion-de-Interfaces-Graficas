@@ -53,6 +53,7 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		configurarMenuContextual();
 		configurarAtajosTeclado();
 		inicializarCategorias();
+		configurarIconosBotones();
 
 		// Carga los contactos almacenados al inicializar.
 		cargarContactosRegistrados();
@@ -494,7 +495,7 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 				});
 
 				try {
-					Thread.sleep(25);
+					Thread.sleep(35);
 				} catch (InterruptedException ex) {
 					Thread.currentThread().interrupt();
 					LOGGER.log(Level.WARNING, "La carga visual de contactos fue interrumpida", ex);
@@ -698,5 +699,24 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 			return new ImageIcon(escalada);
 		}
 		return null;
+	}
+
+	private void configurarIconosBotones() {
+		asignarIconoBoton(delegado.btn_add, "/images/icons/buttons/agregar.png");
+		asignarIconoBoton(delegado.btn_modificar, "/images/icons/buttons/modificar.png");
+		asignarIconoBoton(delegado.btn_eliminar, "/images/icons/buttons/eliminar.png");
+		asignarIconoBoton(delegado.btn_exportar, "/images/icons/buttons/exportar.png");
+		asignarIconoBoton(delegado.btn_actualizar_estadisticas, "/images/icons/buttons/actualizar.png");
+		asignarIconoBoton(delegado.btn_limpiar_estadisticas, "/images/icons/buttons/limpiar.png");
+		asignarIconoBoton(delegado.btn_exportar_reporte, "/images/icons/buttons/exportar.png");
+	}
+
+	private void asignarIconoBoton(JButton boton, String ruta) {
+		if (boton != null) {
+			Icon icono = cargarIcono(ruta);
+			if (icono != null) {
+				boton.setIcon(icono);
+			}
+		}
 	}
 }
