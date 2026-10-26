@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.Locale;
+
 //Definición de la clase pública "persona"
 public class Persona {
 	
@@ -41,7 +43,7 @@ public class Persona {
 	
 	// Método público para obtener el valor de "nombre"
 	public String getNombre() {
-		return nombre; // Retorna el valor de la variable "nombre"
+		return nombre.toUpperCase(Locale.ROOT); // Retorna el valor de la variable "nombre"
 	}
 	
 	// Método público para establecer el valor de "nombre"
@@ -61,7 +63,7 @@ public class Persona {
 	
 	// Método público para obtener el valor de "email"
 	public String getEmail() {
-		return email; // Retorna el valor de la variable "email"
+		return email.toLowerCase(Locale.ROOT); // Retorna el valor de la variable "email"
 	}
 	
 	// Método público para establecer el valor de "email"
@@ -73,8 +75,6 @@ public class Persona {
 	public String getCategoria() {
 		return categoria; // Retorna el valor de la variable "categoria"
 	}
-	
-	
 
 	// Método público para establecer el valor de "categoria"
 	public void setCategoria(String categoria) {

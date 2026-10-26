@@ -1,13 +1,12 @@
-
 package controlador;
 
 import java.awt.*;
-		import java.awt.event.*;
-		import java.io.*;
-		import java.nio.charset.StandardCharsets;
+import java.awt.event.*;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-		import java.util.List;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.swing.*;
-		import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -54,6 +53,8 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		configurarAtajosTeclado();
 		inicializarCategorias();
 		configurarIconosBotones();
+
+		configurarIdiomas();
 
 		// Carga los contactos almacenados al inicializar.
 		cargarContactosRegistrados();
@@ -249,10 +250,18 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		}
 	}
 
-	private static DefaultTableModel columnasDeLaTabla() {
-		String[] columnas = {"ID", "NOMBRES", "TELÉFONO", "EMAIL", "CATEGORÍA", "FAVORITO"};
+	private DefaultTableModel columnasDeLaTabla() {
+		ResourceBundle bundle = delegado.getBundle();
 
-		// Modelo con celdas no editables directamente y tipo Integer para ID (ordena numéricamente)
+		String[] columnas = {
+				bundle != null ? bundle.getString("table.col.id") : "ID",
+				bundle != null ? bundle.getString("table.col.nombres") : "NOMBRES",
+				bundle != null ? bundle.getString("table.col.telefono") : "TELÉFONO",
+				bundle != null ? bundle.getString("table.col.email") : "EMAIL",
+				bundle != null ? bundle.getString("table.col.categoria") : "CATEGORÍA",
+				bundle != null ? bundle.getString("table.col.favorito") : "FAVORITO"
+		};
+
 		return new DefaultTableModel(columnas, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -462,13 +471,15 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 	public void itemStateChanged(ItemEvent e) {
 		// Verifica si el evento proviene del JComboBox de categoría.
 		if (e.getSource() == delegado.cmb_categoria) {
-			// Obtiene el elemento seleccionado en el JComboBox y lo convierte en una cadena.
-			categoria = Objects.requireNonNull(delegado.cmb_categoria.getSelectedItem()).toString();
-			// Actualiza la categoría seleccionada en la variable "categoria".
+			Object seleccionado = delegado.cmb_categoria.getSelectedItem();
+			if (seleccionado != null) {
+				categoria = seleccionado.toString();
+			} else {
+				categoria = "";
+			}
 		} else if (e.getSource() == delegado.chb_favorito) {
 			// Verifica si el evento proviene del JCheckBox de favorito.
 			favorito = delegado.chb_favorito.isSelected();
-			// Obtiene el estado seleccionado del JCheckBox y actualiza el estado de favorito en la variable "favorito".
 		}
 	}
 
@@ -648,26 +659,49 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		}
 	}
 
-	private void inicializarCategorias() {
+	public void inicializarCategorias() {
+		ResourceBundle bundle = delegado.getBundle();
+
+		// Obtener las traducciones del bundle actual (con respaldos por seguridad)
+		String defaultCat = bundle != null ? bundle.getString("cat.default") : "Elija una Categoria";
+		String familia = bundle != null ? bundle.getString("cat.familia") : "Familia";
+		String amigos = bundle != null ? bundle.getString("cat.amigos") : "Amigos";
+		String trabajo = bundle != null ? bundle.getString("cat.trabajo") : "Trabajo";
+		String universidad = bundle != null ? bundle.getString("cat.universidad") : "Universidad";
+		String clientes = bundle != null ? bundle.getString("cat.clientes") : "Clientes";
+		String emergencias = bundle != null ? bundle.getString("cat.emergencias") : "Emergencias";
+		String otros = bundle != null ? bundle.getString("cat.otros") : "Otros";
+
 		String[] categorias = {
-				"Elija una Categoria",
-				"Familia",
-				"Amigos",
-				"Trabajo",
-				"Universidad",
-				"Clientes",
-				"Emergencias",
-				"Otros"
+				defaultCat,
+				familia,
+				amigos,
+				trabajo,
+				universidad,
+				clientes,
+				emergencias,
+				otros
 		};
+
+		int indexSeleccionado = delegado.cmb_categoria.getSelectedIndex();
 		delegado.cmb_categoria.removeAllItems();
 		for (String cat : categorias) {
 			delegado.cmb_categoria.addItem(cat);
 		}
+
+		if (indexSeleccionado >= 0 && indexSeleccionado < delegado.cmb_categoria.getItemCount()) {
+			delegado.cmb_categoria.setSelectedIndex(indexSeleccionado);
+		} else {
+			delegado.cmb_categoria.setSelectedIndex(0);
+		}
+
 		configurarIconosCategorias();
 	}
 
 	private void configurarIconosCategorias() {
 		Map<String, Icon> iconos = new HashMap<>();
+
+		// Iconos para Español
 		iconos.put("Familia", cargarIcono("/images/icons/categories/familia.png"));
 		iconos.put("Amigos", cargarIcono("/images/icons/categories/amigos.png"));
 		iconos.put("Trabajo", cargarIcono("/images/icons/categories/trabajo.png"));
@@ -675,6 +709,23 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		iconos.put("Clientes", cargarIcono("/images/icons/categories/clientes.png"));
 		iconos.put("Emergencias", cargarIcono("/images/icons/categories/emergencias.png"));
 		iconos.put("Otros", cargarIcono("/images/icons/categories/otros.png"));
+
+		// Mapeo equivalente para Inglés
+		iconos.put("Family", iconos.get("Familia"));
+		iconos.put("Friends", iconos.get("Amigos"));
+		iconos.put("Work", iconos.get("Trabajo"));
+		iconos.put("University", iconos.get("Universidad"));
+		iconos.put("Clients", iconos.get("Clientes"));
+		iconos.put("Emergencies", iconos.get("Emergencias"));
+		iconos.put("Others", iconos.get("Otros"));
+
+		// Mapeo equivalente para Portugués
+		iconos.put("Família", iconos.get("Familia"));
+		iconos.put("Trabalho", iconos.get("Trabajo"));
+		iconos.put("Universidade", iconos.get("Universidad"));
+		iconos.put("Clientes", iconos.get("Clientes"));
+		iconos.put("Emergências", iconos.get("Emergencias"));
+		iconos.put("Outros", iconos.get("Otros"));
 
 		delegado.cmb_categoria.setRenderer(new DefaultListCellRenderer() {
 			@Override
@@ -718,5 +769,46 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 				boton.setIcon(icono);
 			}
 		}
+	}
+
+	private void configurarIdiomas() {
+		String[] idiomas = {
+				"Español",
+				"English",
+				"Português"
+		};
+
+		// Desactivar temporalmente los eventos mientras rellenamos el combo
+		for (ActionListener al : this.delegado.cmb_idiomas.getActionListeners()) {
+			this.delegado.cmb_idiomas.removeActionListener(al);
+		}
+
+		delegado.cmb_idiomas.removeAllItems();
+		for (String idio : idiomas) {
+			delegado.cmb_idiomas.addItem(idio);
+		}
+
+		// Volver a activar el escuchador una vez que el combo esté lleno
+		this.delegado.cmb_idiomas.addActionListener(e -> {
+			String seleccionado = (String) this.delegado.cmb_idiomas.getSelectedItem();
+			if (seleccionado != null) {
+				Locale nuevoLocale;
+				switch (seleccionado) {
+                    case "English" -> nuevoLocale = new Locale("en");
+					case "Portugués" -> nuevoLocale = new Locale("pt");
+					default -> nuevoLocale = new Locale("es");
+				}
+				// Actualización global de la interfaz
+				this.delegado.actualizarIdioma(nuevoLocale);
+
+				// Sincronización de categorías e iconos
+				inicializarCategorias();
+
+				// Refresco de cabeceras de la JTable
+				refrescarTablaDesdeMemoria();
+
+				configurarMenuContextual();
+			}
+		});
 	}
 }
