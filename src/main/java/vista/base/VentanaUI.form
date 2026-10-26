@@ -24,17 +24,17 @@
           <color color="-2500135"/>
         </border>
         <children>
-          <component id="lbl_nombres_id" class="javax.swing.JLabel">
+          <component id="lbl_nombres_id" class="javax.swing.JLabel" binding="lbl_nombres_id">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
-              <text value="NOMBRES:"/>
+              <text value="NOMBRE:"/>
             </properties>
           </component>
-          <component id="lbl_email_id" class="javax.swing.JLabel">
+          <component id="lbl_email_id" class="javax.swing.JLabel" binding="lbl_email_id">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -94,7 +94,7 @@
               <text value="MODIFICAR"/>
             </properties>
           </component>
-          <component id="lbl_telefono_id" class="javax.swing.JLabel">
+          <component id="lbl_telefono_id" class="javax.swing.JLabel" binding="lbl_telefono_id">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -104,7 +104,7 @@
               <text value="TELÉFONO:"/>
             </properties>
           </component>
-          <component id="lbl_categoria_id" class="javax.swing.JLabel">
+          <component id="lbl_categoria_id" class="javax.swing.JLabel" binding="lbl_categoria_id">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -112,17 +112,6 @@
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
               <text value="CATEGORÍA:"/>
-            </properties>
-          </component>
-          <component id="chb_favorito_id" class="javax.swing.JCheckBox" binding="chb_favorito">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <background color="-1"/>
-              <font name="Segoe UI" size="12" style="1"/>
-              <foreground color="-12627531"/>
-              <text value="Contacto Favorito"/>
             </properties>
           </component>
           <component id="txt_telefono_id" class="javax.swing.JTextField" binding="txt_telefono">
@@ -174,7 +163,7 @@
               <text value="EXPORTAR"/>
             </properties>
           </component>
-          <component id="lbl_buscar_id" class="javax.swing.JLabel">
+          <component id="lbl_buscar_id" class="javax.swing.JLabel" binding="lbl_buscar_id">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -234,6 +223,23 @@
               </component>
             </children>
           </scrollpane>
+          <component id="1545" class="javax.swing.JComboBox" binding="cmb_idiomas">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="chb_favorito_id" class="javax.swing.JCheckBox" binding="chb_favorito">
+            <constraints>
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <font name="Segoe UI" size="12" style="1"/>
+              <foreground color="-12627531"/>
+              <text value="Contacto Favorito"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="panelEstadisticas" binding="panelEstadisticas" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="6" vgap="8">
@@ -254,7 +260,7 @@
           <scrollpane id="scrEstadisticas" binding="scrEstadisticas">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="-1" height="540"/>
+                <preferred-size width="3" height="599"/>
               </grid>
             </constraints>
             <properties>
@@ -275,17 +281,17 @@
               </component>
             </children>
           </scrollpane>
-          <component id="btn_actualizar_id" class="javax.swing.JButton" binding="btn_actualizar_estadisticas">
+          <component id="btn_exportar_rep_id" class="javax.swing.JButton" binding="btn_exportar_reporte">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="4" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="110" height="36"/>
               </grid>
             </constraints>
             <properties>
-              <background color="-15374912"/>
+              <background color="-13154433"/>
               <font name="Segoe UI" size="11" style="1"/>
               <foreground color="-1"/>
-              <text value="ACTUALIZAR"/>
+              <text value="EXPORTAR"/>
             </properties>
           </component>
           <component id="btn_limpiar_id" class="javax.swing.JButton" binding="btn_limpiar_estadisticas">
@@ -301,17 +307,17 @@
               <text value="LIMPIAR"/>
             </properties>
           </component>
-          <component id="btn_exportar_rep_id" class="javax.swing.JButton" binding="btn_exportar_reporte">
+          <component id="btn_actualizar_id" class="javax.swing.JButton" binding="btn_actualizar_estadisticas">
             <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="110" height="36"/>
               </grid>
             </constraints>
             <properties>
-              <background color="-13154433"/>
+              <background color="-15374912"/>
               <font name="Segoe UI" size="11" style="1"/>
               <foreground color="-1"/>
-              <text value="EXPORTAR"/>
+              <text value="ACTUALIZAR"/>
             </properties>
           </component>
         </children>
