@@ -1,7 +1,7 @@
 package vista;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -44,6 +44,17 @@ public class ventana extends VentanaUI {
 		pack();
 		setLocationRelativeTo(null);
 
+		try {
+			// Carga la imagen desde la ruta de recursos del proyecto
+			java.net.URL iconoURL = getClass().getResource("/images/icons/application/gestion.png");
+			if (iconoURL != null) {
+				ImageIcon iconoOriginal = new ImageIcon(iconoURL);
+				this.setIconImage(iconoOriginal.getImage());
+			}
+		} catch (Exception e) {
+			// Manejo silencioso o registro en caso de que la ruta falle
+			e.printStackTrace();
+		}
 		// Instancia el controlador para inicializar lógica y componentes
 		new LogicaVentana(this);
 	}
@@ -94,6 +105,27 @@ public class ventana extends VentanaUI {
 		} catch (Exception e) {
 			LOGGER.log(Level.WARNING, "No se pudieron refrescar los textos en tiempo de ejecución para: " + locale, e);
 		}
+	}
+
+	public void actualizarTextosVentana(ResourceBundle bundle) {
+		if (bundle == null) return;
+
+		// Etiquetas de los campos del formulario con los nombres correctos
+		lbl_nombres_id.setText(bundle.getString("lbl.nombres"));
+		lbl_telefono_id.setText(bundle.getString("lbl.telefono"));
+		lbl_email_id.setText(bundle.getString("lbl.email"));
+		lbl_buscar_id.setText(bundle.getString("lbl.buscar"));
+		lbl_categoria_id.setText(bundle.getString("lbl.categoria"));
+		chb_favorito.setText(bundle.getString("chb.favorito"));
+
+		// Botones del sistema
+		btn_add.setText(bundle.getString("btn.add"));
+		btn_modificar.setText(bundle.getString("btn.modificar"));
+		btn_eliminar.setText(bundle.getString("btn.eliminar"));
+		btn_exportar.setText(bundle.getString("btn.exportar"));
+		btn_actualizar_estadisticas.setText(bundle.getString("btn.actualizar.estadisticas"));
+		btn_limpiar_estadisticas.setText(bundle.getString("btn.limpiar.estadisticas"));
+		btn_exportar_reporte.setText(bundle.getString("btn.exportar.reporte"));
 	}
 
 

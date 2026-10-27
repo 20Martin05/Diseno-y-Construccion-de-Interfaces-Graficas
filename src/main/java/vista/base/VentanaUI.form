@@ -265,6 +265,7 @@
             </constraints>
             <properties>
               <background color="-526345"/>
+              <doubleBuffered value="false"/>
             </properties>
             <border type="line">
               <color color="-2500135"/>

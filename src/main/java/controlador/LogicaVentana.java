@@ -38,7 +38,7 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 	public LogicaVentana(ventana delegado) {
 		// Asigna la ventana recibida como parámetro a la variable de instancia delegado.
 		this.delegado = delegado;
-		this.delegado.setResizable(false);
+		this.delegado.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		// Configuración inicial de la tabla de contactos
 		this.delegado.lst_contactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -55,6 +55,8 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		configurarIconosBotones();
 
 		configurarIdiomas();
+
+		this.delegado.actualizarTextosVentana(this.delegado.getBundle());
 
 		// Carga los contactos almacenados al inicializar.
 		cargarContactosRegistrados();
@@ -143,27 +145,37 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		});
 	}
 	private void configurarMenuContextual() {
-		delegado.menuContactos = new JPopupMenu();
-		delegado.modificar= new JMenuItem("Modificar");
-		delegado.eliminar = new JMenuItem("Eliminar");
+		ResourceBundle bundle = delegado.getBundle();
 
-		delegado.menuContactos.add(delegado.modificar);
-		delegado.menuContactos.add(delegado.eliminar);
+		String txtModificar = bundle != null ? bundle.getString("menu.modificar") : "Modificar";
+		String txtEliminar = bundle != null ? bundle.getString("menu.eliminar") : "Eliminar";
 
-		delegado.modificar.addActionListener(e -> delegado.btn_modificar.doClick());
-		delegado.eliminar.addActionListener(e -> delegado.btn_eliminar.doClick());
+		if (delegado.menuContactos == null) {
+			delegado.menuContactos = new JPopupMenu();
+			delegado.modificar = new JMenuItem(txtModificar);
+			delegado.eliminar = new JMenuItem(txtEliminar);
 
-		delegado.lst_contactos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				mostrarMenuContextual(e);
-			}
+			delegado.menuContactos.add(delegado.modificar);
+			delegado.menuContactos.add(delegado.eliminar);
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				mostrarMenuContextual(e);
-			}
-		});
+			delegado.modificar.addActionListener(e -> delegado.btn_modificar.doClick());
+			delegado.eliminar.addActionListener(e -> delegado.btn_eliminar.doClick());
+
+			delegado.lst_contactos.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					mostrarMenuContextual(e);
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					mostrarMenuContextual(e);
+				}
+			});
+		} else {
+			delegado.modificar.setText(txtModificar);
+			delegado.eliminar.setText(txtEliminar);
+		}
 	}
 
 	private void mostrarMenuContextual(MouseEvent e) {
@@ -188,24 +200,26 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 	}
 
 	private boolean datosValidos() {
+		ResourceBundle bundle = delegado.getBundle();
 		if (nombres.isBlank() || telefono.isBlank() || email.isBlank()) {
-			JOptionPane.showMessageDialog(delegado, "Todos los campos deben ser llenados.");
+			JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.campos.vacios") : "Todos los campos deben ser llenados.");
 			return false;
 		}
 		if (!nombres.matches("[\\p{L} .'-]{2,80}")) {
-			JOptionPane.showMessageDialog(delegado, "El nombre contiene caracteres no válidos.");
+			JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.nombre.invalido") : "El nombre contiene caracteres no válidos.");
 			return false;
 		}
 		if (!telefono.matches("\\d{7,15}")) {
-			JOptionPane.showMessageDialog(delegado, "El teléfono debe contener entre 7 y 15 dígitos.");
+			JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.telefono.invalido") : "El teléfono debe contener entre 7 y 15 dígitos.");
 			return false;
 		}
 		if (!email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
-			JOptionPane.showMessageDialog(delegado, "Ingrese un correo electrónico válido.");
+			JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.email.invalido") : "Ingrese un correo electrónico válido.");
 			return false;
 		}
-		if (categoria.equals("Elija una Categoria") || categoria.isBlank()) {
-			JOptionPane.showMessageDialog(delegado, "Elija una categoría.");
+		String defaultCat = bundle != null ? bundle.getString("cat.default") : "Elija una Categoria";
+		if (categoria.equals(defaultCat) || categoria.isBlank()) {
+			JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.categoria.invalida") : "Elija una categoría.");
 			return false;
 		}
 		return true;
@@ -333,13 +347,11 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 	// Método que maneja los eventos de acción (clic) en los botones.
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		inicializacionCampos(); // Inicializa las variables con los valores actuales de la GUI.
+		inicializacionCampos();
+		ResourceBundle bundle = delegado.getBundle();
 
-		// Verifica si el evento proviene del botón "Agregar".
 		if (e.getSource() == delegado.btn_add) {
-			// Verifica si los campos de nombres, teléfono y email no están vacíos.
 			if (datosValidos()) {
-				// Calcula el nuevo ID (como base de datos)
 				int nuevoId = 1;
 				if (contactos != null && !contactos.isEmpty()) {
 					nuevoId = contactos.stream()
@@ -347,8 +359,6 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 							.max()
 							.orElse(0) + 1;
 				}
-				// Crea un nuevo objeto persona con los datos ingresados y el ID y lo guarda.
-				// Objeto de tipo persona, que representa un contacto.
 				Persona persona = new Persona(nuevoId, nombres, telefono, email, categoria, favorito);
 				try {
 					new PersonaDAO(persona).escribirArchivo();
@@ -357,14 +367,12 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 					guardarReporteActualizado();
 				} catch (IOException ex) {
 					JOptionPane.showMessageDialog(delegado,
-							"Error al guardar el contacto: " + ex.getMessage(),
+							(bundle != null ? bundle.getString("msg.error.guardar") : "Error al guardar el contacto: ") + ex.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				// Limpia los campos después de agregar el contacto.
 				limpiarCampos();
-				// Muestra un mensaje de éxito.
-				JOptionPane.showMessageDialog(delegado, "Contacto Registrado!!!");
+				JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.contacto.registrado") : "Contacto Registrado!!!");
 			}
 		} else if (e.getSource() == delegado.btn_eliminar) {
 			int filaVista = delegado.lst_contactos.getSelectedRow();
@@ -376,16 +384,15 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 					refrescarTablaDesdeMemoria();
 					guardarReporteActualizado();
 					limpiarCampos();
-					JOptionPane.showMessageDialog(delegado, "Eliminado con Éxito");
+					JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.eliminado.exito") : "Eliminado con Éxito");
 
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(delegado, "Error al eliminar el contacto", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.error.eliminar") : "Error al eliminar el contacto", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(delegado, "Por favor seleccione un contacto de la tabla para eliminar.");
+				JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.seleccione.eliminar") : "Por favor seleccione un contacto de la tabla para eliminar.");
 			}
-
 
 		} else if (e.getSource() == delegado.btn_modificar) {
 			int filaVista = delegado.lst_contactos.getSelectedRow();
@@ -401,17 +408,17 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 						refrescarTablaDesdeMemoria();
 						guardarReporteActualizado();
 						limpiarCampos();
-						JOptionPane.showMessageDialog(delegado, "Modificado con Éxito");
+						JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.modificado.exito") : "Modificado con Éxito");
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(delegado, "Error al modificar el contacto", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.error.modificar") : "Error al modificar el contacto", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			} else {
-				JOptionPane.showMessageDialog(delegado, "Por favor seleccione un contacto de la tabla para modificar.");
+				JOptionPane.showMessageDialog(delegado, bundle != null ? bundle.getString("msg.seleccione.modificar") : "Por favor seleccione un contacto de la tabla para modificar.");
 			}
 		} else if (e.getSource() == delegado.btn_exportar) {
 			JFileChooser chooser = new JFileChooser();
-			chooser.setDialogTitle("Exportar Contactos a CSV");
+			chooser.setDialogTitle(bundle != null ? bundle.getString("dialog.exportar.titulo") : "Exportar Contactos a CSV");
 			chooser.setSelectedFile(new File("tabla_contactos.csv"));
 
 			if (chooser.showSaveDialog(delegado) == JFileChooser.APPROVE_OPTION) {
@@ -420,10 +427,14 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 					destino = new File(destino.getAbsolutePath() + ".csv");
 				}
 				try {
+					if (contactos == null) {
+						contactos = new ArrayList<>();
+					}
 					new PersonaDAO(new Persona()).exportarCSV(destino, contactos);
-					JOptionPane.showMessageDialog(delegado, "Exportado exitosamente en:\n" + destino.getAbsolutePath());
+					String msgExito = bundle != null ? bundle.getString("msg.exportado.exito") : "Exportado exitosamente en:\n";
+					JOptionPane.showMessageDialog(delegado, msgExito + destino.getAbsolutePath());
 				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(delegado, "Error al exportar archivo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(delegado, (bundle != null ? bundle.getString("msg.error.exportar") : "Error al exportar archivo: ") + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		} else if (e.getSource() == delegado.btn_actualizar_estadisticas) {
@@ -520,9 +531,11 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 	}
 
 	public String calcularYMostrarEstadisticas(List<Persona> contactos) {
+		ResourceBundle bundle = delegado.getBundle();
+
 		if (contactos == null || contactos.isEmpty()) {
 			limpiarTablaEstadisticas();
-			return "No hay contactos disponibles para generar el reporte.";
+			return bundle != null ? bundle.getString("stats.vacio") : "No hay contactos disponibles para generar el reporte.";
 		}
 
 		int total = contactos.size();
@@ -538,44 +551,67 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 				noFav++;
 			}
 
-			String cat = (p.getCategoria() != null && !p.getCategoria().trim().isEmpty())
+			String catCruda = (p.getCategoria() != null && !p.getCategoria().trim().isEmpty())
 					? p.getCategoria().trim()
-					: "Sin Categoría";
+					: (bundle != null ? bundle.getString("stats.sin.categoria") : "Sem Categoria");
 
-			if (cat.equalsIgnoreCase("Amigo")) {
-				cat = "Amigos";
+			// Mapeo dinámico y multilingüe para las categorías según el bundle activo
+			String catTraducida;
+			String lowerCat = catCruda.toLowerCase();
+
+			if (lowerCat.contains("familia") || lowerCat.contains("family") || lowerCat.contains("família")) {
+				catTraducida = bundle != null ? bundle.getString("cat.familia") : "Família";
+			} else if (lowerCat.contains("amigo") || lowerCat.contains("friend")) {
+				catTraducida = bundle != null ? bundle.getString("cat.amigos") : "Amigos";
+			} else if (lowerCat.contains("trabajo") || lowerCat.contains("work") || lowerCat.contains("trabalho")) {
+				catTraducida = bundle != null ? bundle.getString("cat.trabajo") : "Trabalho";
+			} else if (lowerCat.contains("universidad") || lowerCat.contains("university") || lowerCat.contains("universidade")) {
+				catTraducida = bundle != null ? bundle.getString("cat.universidad") : "Universidade";
+			} else if (lowerCat.contains("cliente") || lowerCat.contains("client")) {
+				catTraducida = bundle != null ? bundle.getString("cat.clientes") : "Clientes";
+			} else if (lowerCat.contains("emergencia") || lowerCat.contains("emergency") || lowerCat.contains("emergência")) {
+				catTraducida = bundle != null ? bundle.getString("cat.emergencias") : "Emergências";
+			} else {
+				catTraducida = bundle != null ? bundle.getString("cat.otros") : "Outros";
 			}
 
-			mapaCategorias.put(cat, mapaCategorias.getOrDefault(cat, 0) + 1);
+			mapaCategorias.put(catTraducida, mapaCategorias.getOrDefault(catTraducida, 0) + 1);
 		}
 
 		double porcentajeFavoritos = (fav * 100.0) / total;
 		double porcentajeNoFavoritos = (noFav * 100.0) / total;
 
-		// Anchos para separadores de sección
 		String lineaDoble = "=========================================================================";
 		String lineaSimple = "-------------------------------------------------------------------------";
 
 		StringBuilder sb = new StringBuilder();
 
-		// 1. Encabezado principal
+		// 1. Encabezado principal traducido
 		sb.append(lineaDoble).append("\n");
-		sb.append(String.format("%-73s\n", "                    REPORTE ESTADÍSTICO DE CONTACTOS"));
+		String tituloReporte = bundle != null ? bundle.getString("stats.titulo.reporte") : "REPORTE ESTADÍSTICO DE CONTACTOS";
+		sb.append(String.format("%-73s\n", "                    " + tituloReporte));
 		sb.append(lineaDoble).append("\n\n");
 
-		// 2. Total general
-		sb.append(String.format("- TOTAL DE CONTACTOS REGISTRADOS: %d\n\n\n", total));
+		// 2. Total general traducido
+		String lblTotal = bundle != null ? bundle.getString("stats.total.registrados") : "TOTAL DE CONTACTOS REGISTRADOS";
+		sb.append(String.format("- %s: %d\n\n\n", lblTotal, total));
 
-		// 3. Desglose por favoritos
+		// 3. Desglose por favoritos traducido
 		sb.append(lineaSimple).append("\n");
-		sb.append("  DESGLOSE POR ESTADO DE FAVORITOS:\n");
+		String lblDesgloseFav = bundle != null ? bundle.getString("stats.desglose.favoritos") : "DESGLOSE POR ESTADO DE FAVORITOS";
+		sb.append("  " + lblDesgloseFav + ":\n");
 		sb.append(lineaSimple).append("\n");
-		sb.append(String.format("- Favoritos:     %-5d (%.1f%%)\n\n", fav, porcentajeFavoritos));
-		sb.append(String.format("- No Favoritos:  %-5d (%.1f%%)\n\n\n", noFav, porcentajeNoFavoritos));
 
-		// 4. Distribución por categorías
+		String lblFav = bundle != null ? bundle.getString("stats.favoritos") : "Favoritos";
+		String lblNoFav = bundle != null ? bundle.getString("stats.no.favoritos") : "No Favoritos";
+
+		sb.append(String.format("- %-13s: %-5d (%.1f%%)\n\n", lblFav, fav, porcentajeFavoritos));
+		sb.append(String.format("- %-13s: %-5d (%.1f%%)\n\n\n", lblNoFav, noFav, porcentajeNoFavoritos));
+
+		// 4. Distribución por categorías traducido
 		sb.append(lineaSimple).append("\n");
-		sb.append("  DISTRIBUCIÓN POR CATEGORÍAS:\n");
+		String lblDistCat = bundle != null ? bundle.getString("stats.distribucion.categorias") : "DISTRIBUCIÓN POR CATEGORÍAS";
+		sb.append("  " + lblDistCat + ":\n");
 		sb.append(lineaSimple).append("\n");
 
 		for (Map.Entry<String, Integer> entry : mapaCategorias.entrySet()) {
@@ -585,22 +621,21 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 
 		sb.append("\n");
 
-		// 5. Pie del reporte con fecha/hora
+		// 5. Pie del reporte con fecha/hora traducido
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		String fechaActual = sdf.format(new Date());
 
 		sb.append(lineaDoble).append("\n");
-		sb.append(String.format("  Fecha de cálculo: %s\n", fechaActual));
+		String lblFecha = bundle != null ? bundle.getString("stats.fecha.calculo") : "Fecha de cálculo";
+		sb.append(String.format("  %s: %s\n", lblFecha, fechaActual));
 		sb.append(lineaDoble).append("\n");
 
 		String reporteTexto = sb.toString();
 
-		// Asignamos directamente la cadena al JTextArea de Swing
 		if (delegado.tbl_estadisticas != null) {
-			// Se recomienda una fuente de ancho fijo para mantener la alineación
 			delegado.tbl_estadisticas.setFont(new Font("Monospaced", Font.PLAIN, 12));
 			delegado.tbl_estadisticas.setText(reporteTexto);
-			delegado.tbl_estadisticas.setCaretPosition(0); // Scroll al inicio
+			delegado.tbl_estadisticas.setCaretPosition(0);
 		}
 
 		return reporteTexto;
@@ -778,7 +813,6 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 				"Português"
 		};
 
-		// Desactivar temporalmente los eventos mientras rellenamos el combo
 		for (ActionListener al : this.delegado.cmb_idiomas.getActionListeners()) {
 			this.delegado.cmb_idiomas.removeActionListener(al);
 		}
@@ -788,26 +822,30 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 			delegado.cmb_idiomas.addItem(idio);
 		}
 
-		// Volver a activar el escuchador una vez que el combo esté lleno
 		this.delegado.cmb_idiomas.addActionListener(e -> {
 			String seleccionado = (String) this.delegado.cmb_idiomas.getSelectedItem();
 			if (seleccionado != null) {
 				Locale nuevoLocale;
 				switch (seleccionado) {
-                    case "English" -> nuevoLocale = new Locale("en");
-					case "Portugués" -> nuevoLocale = new Locale("pt");
+					case "English" -> nuevoLocale = new Locale("en");
+					case "Português" -> nuevoLocale = new Locale("pt");
 					default -> nuevoLocale = new Locale("es");
 				}
-				// Actualización global de la interfaz
 				this.delegado.actualizarIdioma(nuevoLocale);
-
-				// Sincronización de categorías e iconos
 				inicializarCategorias();
-
-				// Refresco de cabeceras de la JTable
 				refrescarTablaDesdeMemoria();
-
 				configurarMenuContextual();
+				calcularYMostrarEstadisticas(contactos);
+
+				// <-- AGREGAR ESTE BLOQUE PARA ACTUALIZAR EL TEXTO DE LA BARRA AL CAMBIAR IDIOMA -->
+				if (contactos != null && !contactos.isEmpty() && delegado.barra.getValue() > 0) {
+					ResourceBundle bundle = delegado.getBundle();
+					String formato = bundle != null ? bundle.getString("progress.formato") : "%d/%d contactos - %d ms";
+					int valorActual = delegado.barra.getValue();
+					int total = contactos.size();
+					// Mantenemos el tiempo aproximado o actual de la barra
+					delegado.barra.setString(String.format(formato, valorActual, total, 0));
+				}
 			}
 		});
 	}
