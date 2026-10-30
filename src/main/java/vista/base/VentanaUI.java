@@ -44,7 +44,7 @@ public class VentanaUI extends JFrame {
     public final JButton btn_actualizar_estadisticas;
     public final JButton btn_limpiar_estadisticas;
     public final JButton btn_exportar_reporte;
-    public final JComboBox cmb_idiomas;
+    public final JComboBox<String> cmb_idiomas;
     public final JLabel lbl_nombres_id;
     public final JLabel lbl_email_id;
     public final JLabel lbl_telefono_id;
@@ -120,7 +120,7 @@ public class VentanaUI extends JFrame {
             if (txt_telefonoFont != null) txt_telefono.setFont(txt_telefonoFont);
             txt_telefono.setForeground(new Color(-14540254));
             panelContactos.add(txt_telefono, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(160, 34), null, 0, false));
-            cmb_categoria = new JComboBox();
+            cmb_categoria = new JComboBox<>();
             cmb_categoria.setBackground(new Color(-1));
             Font cmb_categoriaFont = this.$$$getFont$$$("Segoe UI", Font.PLAIN, 13, cmb_categoria.getFont());
             if (cmb_categoriaFont != null) cmb_categoria.setFont(cmb_categoriaFont);
@@ -172,7 +172,7 @@ public class VentanaUI extends JFrame {
             lst_contactos.setSelectionBackground(new Color(-15108422));
             lst_contactos.setSelectionForeground(new Color(-1));
             scrLista.setViewportView(lst_contactos);
-            cmb_idiomas = new JComboBox();
+            cmb_idiomas = new JComboBox<>();
             panelContactos.add(cmb_idiomas, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
             chb_favorito = new JCheckBox();
             chb_favorito.setBackground(new Color(-1));
@@ -188,6 +188,7 @@ public class VentanaUI extends JFrame {
             panelEstadisticas.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "\uD83D\uDCCA INFORME / ESTADÍSTICAS", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, this.$$$getFont$$$("Segoe UI", Font.BOLD, 12, panelEstadisticas.getFont()), null));
             scrEstadisticas = new JScrollPane();
             scrEstadisticas.setBackground(new Color(-526345));
+            scrEstadisticas.setDoubleBuffered(false);
             panelEstadisticas.add(scrEstadisticas, new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(3, 599), null, 0, false));
             scrEstadisticas.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(-2500135)), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
             tbl_estadisticas = new JTextArea();
