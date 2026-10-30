@@ -65,6 +65,10 @@ public class PersonaDAO {
 				if (linea.isBlank()) continue;
 				String[] partes = linea.split(";", -1);
 				if (partes.length >= 6) {
+					// Omitir cabecera si la primera columna no es un número (ej. "ID")
+					if (partes[0].equalsIgnoreCase("id") || !partes[0].matches("\\d+")) {
+						continue;
+					}
 					try {
 						Persona p = new Persona();
 						p.setId(Integer.parseInt(partes[0]));
