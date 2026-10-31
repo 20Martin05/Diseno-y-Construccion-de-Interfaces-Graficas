@@ -1,9 +1,11 @@
 package controlador;
 
+import java.awt.Component;
 import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -14,6 +16,7 @@ import vista.ventana;
 public class TablaContactos {
     private static final int[] ANCHOS = {50, 160, 100, 180, 110, 80};
     private static final int[] MAXIMOS = {70, -1, -1, -1, -1, 90};
+    private static final int COLUMNA_CATEGORIA = 4;
 
     private final ventana delegado;
     private final JTable tabla;
@@ -44,6 +47,7 @@ public class TablaContactos {
         sorter = new TableRowSorter<>(modelo);
         tabla.setRowSorter(sorter);
         aplicarAnchos();
+        aplicarRendererCategoria();
     }
 
     private DefaultTableModel crearModelo() {
@@ -75,6 +79,20 @@ public class TablaContactos {
             columnas.getColumn(i).setPreferredWidth(ANCHOS[i]);
             if (MAXIMOS[i] > 0) columnas.getColumn(i).setMaxWidth(MAXIMOS[i]);
         }
+    }
+
+    // Traduce la columna CATEGORÍA al dibujar, según el idioma activo.
+    private void aplicarRendererCategoria() {
+        if (tabla.getColumnModel().getColumnCount() <= COLUMNA_CATEGORIA) return;
+        tabla.getColumnModel().getColumn(COLUMNA_CATEGORIA).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable tbl, Object value, boolean isSelected,
+                                                           boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(tbl, value, isSelected, hasFocus, row, column);
+                setText(CategoriasControlador.etiqueta(delegado.getBundle(), value == null ? "" : value.toString()));
+                return this;
+            }
+        });
     }
 
     // Filtra por nombre sin distinguir mayúsculas; texto vacío muestra todos.
