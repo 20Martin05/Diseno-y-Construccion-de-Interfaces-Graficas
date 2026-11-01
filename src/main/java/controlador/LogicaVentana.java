@@ -84,11 +84,13 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		delegado.cmb_categoria.addItemListener(this);
 		delegado.chb_favorito.addItemListener(this);
 		delegado.lst_contactos.getSelectionModel().addListSelectionListener(this);
-		delegado.txt_buscar.getDocument().addDocumentListener(new DocumentListener() {
-			public void insertUpdate(DocumentEvent e) { tabla.filtrar(delegado.txt_buscar.getText()); }
-			public void removeUpdate(DocumentEvent e) { tabla.filtrar(delegado.txt_buscar.getText()); }
-			public void changedUpdate(DocumentEvent e) { tabla.filtrar(delegado.txt_buscar.getText()); }
-		});
+		DocumentListener filtro = new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) { filtrar(); }
+			public void removeUpdate(DocumentEvent e) { filtrar(); }
+			public void changedUpdate(DocumentEvent e) { filtrar(); }
+			private void filtrar() { tabla.filtrar(delegado.txt_buscar.getText()); }
+		};
+		delegado.txt_buscar.getDocument().addDocumentListener(filtro);
 	}
 
 	private String t(String clave, String respaldo) {
@@ -177,10 +179,6 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		delegado.cmb_categoria.setSelectedIndex(Math.min(indice, delegado.cmb_categoria.getItemCount() - 1));
 	}
 
-	private void leerCampos() {
-		// Los valores se leen en cada acción; no hace falta almacenarlos.
-	}
-
 	private void actualizarEstadoAcciones() {
 		boolean hay = delegado.lst_contactos.getSelectedRow() >= 0;
 		delegado.btn_modificar.setEnabled(hay);
@@ -219,27 +217,19 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 				refrescar();
 				limpiarCampos();
 			}
-		} else if (origen == delegado.btn_modificar) {
+		} else if (origen == delegado.btn_modificar || origen == delegado.btn_eliminar) {
 			int fila = delegado.lst_contactos.getSelectedRow();
 			if (fila == -1) {
-				JOptionPane.showMessageDialog(delegado,
-						t("msg.seleccione.modificar", "Por favor seleccione un contacto de la tabla para modificar."));
+				String claveMsg = origen == delegado.btn_modificar ? "msg.seleccione.modificar" : "msg.seleccione.eliminar";
+				String defMsg = origen == delegado.btn_modificar ? "Por favor seleccione un contacto de la tabla para modificar." : "Por favor seleccione un contacto de la tabla para eliminar.";
+				JOptionPane.showMessageDialog(delegado, t(claveMsg, defMsg));
 				return;
 			}
 			int indice = delegado.lst_contactos.convertRowIndexToModel(fila);
-			if (contactos.modificar(indice, nombres, telefono, email, categoria, favorito)) {
-				refrescar();
-				limpiarCampos();
-			}
-		} else if (origen == delegado.btn_eliminar) {
-			int fila = delegado.lst_contactos.getSelectedRow();
-			if (fila == -1) {
-				JOptionPane.showMessageDialog(delegado,
-						t("msg.seleccione.eliminar", "Por favor seleccione un contacto de la tabla para eliminar."));
-				return;
-			}
-			int indice = delegado.lst_contactos.convertRowIndexToModel(fila);
-			if (contactos.eliminar(indice)) {
+			boolean exito = origen == delegado.btn_modificar
+					? contactos.modificar(indice, nombres, telefono, email, categoria, favorito)
+					: contactos.eliminar(indice);
+			if (exito) {
 				refrescar();
 				limpiarCampos();
 			}
