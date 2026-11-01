@@ -53,12 +53,8 @@ public class ventana extends VentanaUI {
 		try {
 			bundle = ResourceBundle.getBundle("messages", locale);
 
-			if (panelContactos.getBorder() instanceof TitledBorder tb) {
-				tb.setTitle(bundle.getString("border.contactos"));
-			}
-			if (panelEstadisticas.getBorder() instanceof TitledBorder tb) {
-				tb.setTitle(bundle.getString("border.estadisticas"));
-			}
+			if (panelContactos.getBorder() instanceof TitledBorder tb) tb.setTitle(bundle.getString("border.contactos"));
+			if (panelEstadisticas.getBorder() instanceof TitledBorder tb) tb.setTitle(bundle.getString("border.estadisticas"));
 
 			btn_add.setText(bundle.getString("btn.add"));
 			btn_modificar.setText(bundle.getString("btn.modificar"));
