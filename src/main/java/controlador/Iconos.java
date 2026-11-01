@@ -30,19 +30,19 @@ public class Iconos {
     }
 
     public void configurarBotones() {
-        Object[][] pares = {
-                {delegado.btn_add, "agregar"},
-                {delegado.btn_modificar, "modificar"},
-                {delegado.btn_eliminar, "eliminar"},
-                {delegado.btn_exportar, "exportar"},
-                {delegado.btn_actualizar_estadisticas, "actualizar"},
-                {delegado.btn_limpiar_estadisticas, "limpiar"},
-                {delegado.btn_exportar_reporte, "exportar"}
-        };
-        for (Object[] par : pares) {
-            Icon icono = cargar("/images/icons/buttons/" + par[1] + ".png");
-            if (icono != null) ((JButton) par[0]).setIcon(icono);
-        }
+        Map<JButton, String> mapa = Map.of(
+                delegado.btn_add, "agregar",
+                delegado.btn_modificar, "modificar",
+                delegado.btn_eliminar, "eliminar",
+                delegado.btn_exportar, "exportar",
+                delegado.btn_actualizar_estadisticas, "actualizar",
+                delegado.btn_limpiar_estadisticas, "limpiar",
+                delegado.btn_exportar_reporte, "exportar"
+        );
+        mapa.forEach((btn, nombre) -> {
+            Icon icono = cargar("/images/icons/buttons/" + nombre + ".png");
+            if (icono != null) btn.setIcon(icono);
+        });
     }
 
     // Renderer del combo: muestra el icono según el texto traducido de cada categoría.
