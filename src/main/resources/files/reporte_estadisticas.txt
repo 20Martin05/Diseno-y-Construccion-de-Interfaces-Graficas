@@ -1,36 +1,36 @@
 =========================================================================
-                    RELATÓRIO ESTATÍSTICO DE CONTATOS                    
+                    REPORTE ESTADÍSTICO DE CONTACTOS                     
 =========================================================================
 
-- TOTAL DE CONTATOS REGISTRADOS: 501
+- TOTAL DE CONTACTOS REGISTRADOS: 501
 
 
 -------------------------------------------------------------------------
-  DETALHAMENTO POR STATUS DE FAVORITOS:
+  DESGLOSE POR ESTADO DE FAVORITOS:
 -------------------------------------------------------------------------
 - Favoritos    : 251   (50,1%)
 
-- Não Favoritos: 250   (49,9%)
+- No Favoritos : 250   (49,9%)
 
 
 -------------------------------------------------------------------------
-  DISTRIBUIÇÃO POR CATEGORIAS:
+  DISTRIBUCIÓN POR CATEGORÍAS:
 -------------------------------------------------------------------------
-- Família           : 72    (14,4%)
+- Familia           : 72    (14,4%)
 
-- Trabalho          : 72    (14,4%)
+- Trabajo           : 72    (14,4%)
 
-- Universidade      : 72    (14,4%)
+- Universidad       : 72    (14,4%)
 
 - Amigos            : 72    (14,4%)
 
-- Emergências       : 71    (14,2%)
+- Emergencias       : 71    (14,2%)
 
 - Clientes          : 71    (14,2%)
 
-- Outros            : 71    (14,2%)
+- Otros             : 71    (14,2%)
 
 
 =========================================================================
-  Data de cálculo: 30 de out. de 2026 15:47:19
+  Fecha de cálculo: 31 oct 2026, 11:15:45
 =========================================================================
