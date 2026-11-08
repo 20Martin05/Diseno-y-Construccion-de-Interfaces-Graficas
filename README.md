@@ -61,7 +61,6 @@ src/
 │       ├── messages_en.properties           # Textos en Inglés
 │       ├── messages_es.properties           # Textos en Español
 │       └── messages_pt.properties           # Textos en Portugués
-└── test/
 ```
 
 ---
@@ -105,13 +104,14 @@ También puedes descargar el proyecto en ZIP desde GitHub y descomprimirlo.
 ### ▶️ Compilar y Ejecutar
 
 1. Abre el proyecto en IntelliJ IDEA seleccionando el `pom.xml` como proyecto Maven.
-2. Marca `src/main/resources` como Resources Root (*Mark Directory as → Resources Root*).
-3. Ejecuta la clase `vista.ventana` (`src/main/java/vista/ventana.java`).
+2. Ejecuta la clase `vista.ventana` (`src/main/java/vista/ventana.java`).
 
 Desde la terminal:
 
 ```bash
+mvn test
 mvn clean package
+java -jar target/Diseno-Construccion-Interfaces-Graficas-1.1.0.jar
 ```
 
 ---
