@@ -33,7 +33,7 @@
 
     <build>
         <plugins>
-            <!-- Compilador Maven  -->
+            <!-- Compilador Maven -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -44,7 +44,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin para crear un JAR ejecutable  -->
+            <!-- Plugin estándar para generar un único JAR ejecutable limpio -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

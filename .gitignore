@@ -1,5 +1,6 @@
  Compilados de Maven
 target/
+data/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -41,4 +42,3 @@ desktop.ini
 *.tmp
 *.bak
 *.swp
-
