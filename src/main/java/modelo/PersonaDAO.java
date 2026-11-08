@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +19,7 @@ public class PersonaDAO {
 	private static final Logger LOGGER = Logger.getLogger(PersonaDAO.class.getName());
 	private static final Path DATA_DIRECTORY = resolverDirectorioDatos();
 	private static final String CONTACTS_FILE = "tabla_contactos.csv";
+	private static final Pattern ID_VALIDO = Pattern.compile("\\d+");
 
 	private File archivo;
 	private final Persona persona;
@@ -66,7 +69,7 @@ public class PersonaDAO {
 				String[] partes = linea.split(";", -1);
 				if (partes.length >= 6) {
 					// Omitir cabecera si la primera columna no es un número (ej. "ID")
-					if (partes[0].equalsIgnoreCase("id") || !partes[0].matches("\\d+")) {
+					if (partes[0].equalsIgnoreCase("id") || !ID_VALIDO.matcher(partes[0]).matches()) {
 						continue;
 					}
 					try {
@@ -106,8 +109,19 @@ public class PersonaDAO {
 	}
 
 	public void exportarCSV(File destino, List<Persona> lista) throws IOException {
+		exportarCSV(destino, lista, null);
+	}
+
+	public void exportarCSV(File destino, List<Persona> lista, ResourceBundle bundle) throws IOException {
 		try (BufferedWriter bw = Files.newBufferedWriter(destino.toPath(), StandardCharsets.UTF_8)) {
-			bw.write("ID;NOMBRE;TELÉFONO;EMAIL;CATEGORIA;FAVORITO");
+			String[] encabezados = {
+					bundle == null ? "NAMES" : bundle.getString("table.col.nombres"),
+					bundle == null ? "PHONE" : bundle.getString("table.col.telefono"),
+					bundle == null ? "EMAIL" : bundle.getString("table.col.email"),
+					bundle == null ? "CATEGORY" : bundle.getString("table.col.categoria"),
+					bundle == null ? "FAVORITE" : bundle.getString("table.col.favorito")
+			};
+			bw.write("ID;" + String.join(";", encabezados));
 			bw.newLine();
 			for (Persona p : lista) {
 				bw.write(p.datosContacto());

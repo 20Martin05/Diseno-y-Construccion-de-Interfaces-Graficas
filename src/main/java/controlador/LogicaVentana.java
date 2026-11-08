@@ -255,7 +255,7 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 			destino = new java.io.File(destino.getAbsolutePath() + ".csv");
 		}
 		try {
-			new PersonaDAO(new Persona()).exportarCSV(destino, contactos.getContactos());
+			new PersonaDAO(new Persona()).exportarCSV(destino, contactos.getContactos(), delegado.getBundle());
 			JOptionPane.showMessageDialog(delegado,
 					t("msg.exportado.exito", "Exportado exitosamente en:\n") + destino.getAbsolutePath());
 		} catch (IOException ex) {
@@ -363,26 +363,19 @@ public class LogicaVentana implements ActionListener, ListSelectionListener, Ite
 		}
 
 		Locale locale = delegado.getBundle() != null ? delegado.getBundle().getLocale() : Locale.getDefault();
-		Thread hilo = new Thread(() -> {
-			long inicio = System.nanoTime();
-			for (int v = 1; v <= total; v++) {
-				final int valor = v;
-				final long ms = (System.nanoTime() - inicio) / 1_000_000;
-				SwingUtilities.invokeLater(() -> {
-					delegado.barra.setValue(valor);
-					delegado.barra.setString(String.format(locale,
-							t("progress.formato", "%d/%d contactos - %d ms"), valor, total, ms));
-				});
-				try {
-					Thread.sleep(35);
-				} catch (InterruptedException ex) {
-					Thread.currentThread().interrupt();
-					LOGGER.log(Level.WARNING, "La carga visual de contactos fue interrumpida", ex);
-					return;
-				}
+		long inicio = System.nanoTime();
+		Timer temporizador = new Timer(35, null);
+		temporizador.addActionListener(e -> {
+			int valor = delegado.barra.getValue() + 1;
+			long ms = (System.nanoTime() - inicio) / 1_000_000;
+			delegado.barra.setValue(valor);
+			delegado.barra.setString(String.format(locale,
+					t("progress.formato", "%d/%d contactos - %d ms"), valor, total, ms));
+			if (valor >= total) {
+				temporizador.stop();
 			}
-		}, "barra-progreso-contactos");
-		hilo.setDaemon(true);
-		hilo.start();
+		});
+		temporizador.setRepeats(true);
+		temporizador.start();
 	}
 }

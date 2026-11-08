@@ -31,7 +31,7 @@
             <properties>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
-              <text value="NOMBRE:"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="lbl_email_id" class="javax.swing.JLabel" binding="lbl_email_id">
@@ -41,7 +41,7 @@
             <properties>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
-              <text value="EMAIL:"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="txt_nombres_id" class="javax.swing.JTextField" binding="txt_nombres">
@@ -78,7 +78,7 @@
               <background color="-13730510"/>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-1"/>
-              <text value="AGREGAR"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="btn_modificar_id" class="javax.swing.JButton" binding="btn_modificar">
@@ -91,7 +91,7 @@
               <background color="-15108422"/>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-1"/>
-              <text value="MODIFICAR"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="lbl_telefono_id" class="javax.swing.JLabel" binding="lbl_telefono_id">
@@ -101,7 +101,7 @@
             <properties>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
-              <text value="TELÉFONO:"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="lbl_categoria_id" class="javax.swing.JLabel" binding="lbl_categoria_id">
@@ -111,7 +111,7 @@
             <properties>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
-              <text value="CATEGORÍA:"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="txt_telefono_id" class="javax.swing.JTextField" binding="txt_telefono">
@@ -147,7 +147,7 @@
               <background color="-2937297"/>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-1"/>
-              <text value="ELIMINAR"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="btn_exportar_id" class="javax.swing.JButton" binding="btn_exportar">
@@ -160,7 +160,7 @@
               <background color="-12232044"/>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-1"/>
-              <text value="EXPORTAR"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="lbl_buscar_id" class="javax.swing.JLabel" binding="lbl_buscar_id">
@@ -170,7 +170,7 @@
             <properties>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-13421773"/>
-              <text value="BUSCAR POR NOMBRE:"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="txt_buscar_id" class="javax.swing.JTextField" binding="txt_buscar">
@@ -237,7 +237,7 @@
               <background color="-1"/>
               <font name="Segoe UI" size="12" style="1"/>
               <foreground color="-12627531"/>
-              <text value="Contacto Favorito"/>
+              <text value=""/>
             </properties>
           </component>
         </children>
@@ -292,7 +292,7 @@
               <background color="-13154433"/>
               <font name="Segoe UI" size="11" style="1"/>
               <foreground color="-1"/>
-              <text value="EXPORTAR"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="btn_limpiar_id" class="javax.swing.JButton" binding="btn_limpiar_estadisticas">
@@ -305,7 +305,7 @@
               <background color="-1683200"/>
               <font name="Segoe UI" size="11" style="1"/>
               <foreground color="-1"/>
-              <text value="LIMPIAR"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="btn_actualizar_id" class="javax.swing.JButton" binding="btn_actualizar_estadisticas">
@@ -318,7 +318,7 @@
               <background color="-15374912"/>
               <font name="Segoe UI" size="11" style="1"/>
               <foreground color="-1"/>
-              <text value="ACTUALIZAR"/>
+              <text value=""/>
             </properties>
           </component>
         </children>
