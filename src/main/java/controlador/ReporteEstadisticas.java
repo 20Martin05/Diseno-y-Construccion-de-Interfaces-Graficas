@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import modelo.Persona;
 
@@ -27,6 +28,14 @@ public class ReporteEstadisticas {
             {"universidad|university|universidade", "universidad"},
             {"client", "clientes"},
             {"emergen", "emergencias"}
+    };
+    private static final Pattern[] PATRONES_CATEGORIA = {
+            Pattern.compile(".*(familia|family|família).*"),
+            Pattern.compile(".*(amig|friend).*"),
+            Pattern.compile(".*(trabaj|work|trabalho).*"),
+            Pattern.compile(".*(universidad|university|universidade).*"),
+            Pattern.compile(".*(client).*"),
+            Pattern.compile(".*(emergen).*")
     };
 
     private final ResourceBundle bundle;
@@ -95,8 +104,10 @@ public class ReporteEstadisticas {
     private String claveCategoria(String cruda, String sinCategoria) {
         if (cruda == null || cruda.isBlank()) return sinCategoria;
         String l = cruda.trim().toLowerCase(Locale.ROOT);
-        for (String[] par : PALABRAS_CATEGORIA) {
-            if (l.matches(".*(" + par[0] + ").*")) return t("cat." + par[1], cruda);
+        for (int i = 0; i < PATRONES_CATEGORIA.length; i++) {
+            if (PATRONES_CATEGORIA[i].matcher(l).matches()) {
+                return t("cat." + PALABRAS_CATEGORIA[i][1], cruda);
+            }
         }
         return t("cat.otros", "Otros");
     }

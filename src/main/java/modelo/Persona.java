@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Locale;
-
 public class Persona {
 	private int id;
 	private String nombre;
@@ -21,9 +19,9 @@ public class Persona {
 
 	public Persona(int id, String nombre, String telefono, String email, String categoria, boolean favorito) {
 		this.id = id;
-		this.nombre = nombre;
+		this.nombre = normalizarNombre(nombre);
 		this.telefono = telefono;
-		this.email = email;
+		this.email = normalizarEmail(email);
 		this.categoria = categoria;
 		this.favorito = favorito;
 	}
@@ -31,14 +29,14 @@ public class Persona {
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 
-	public String getNombre() { return nombre != null ? nombre.toUpperCase(Locale.ROOT) : ""; }
-	public void setNombre(String nombre) { this.nombre = nombre; }
+	public String getNombre() { return nombre; }
+	public void setNombre(String nombre) { this.nombre = normalizarNombre(nombre); }
 
 	public String getTelefono() { return telefono; }
 	public void setTelefono(String telefono) { this.telefono = telefono; }
 
-	public String getEmail() { return email != null ? email.toLowerCase(Locale.ROOT) : ""; }
-	public void setEmail(String email) { this.email = email; }
+	public String getEmail() { return email; }
+	public void setEmail(String email) { this.email = normalizarEmail(email); }
 
 	public String getCategoria() { return categoria; }
 	public void setCategoria(String categoria) { this.categoria = categoria; }
@@ -47,7 +45,14 @@ public class Persona {
 	public void setFavorito(boolean favorito) { this.favorito = favorito; }
 
 	public String datosContacto() {
-		return String.format(Locale.ROOT, "%d;%s;%s;%s;%s;%s", id, nombre, telefono, email, categoria, favorito);
+		return id + ";" + nombre + ";" + telefono + ";" + email + ";" + categoria + ";" + favorito;
+	}
+
+	private static String normalizarNombre(String valor) {
+		return valor == null ? "" : valor.toUpperCase(java.util.Locale.ROOT);
+	}
+
+	private static String normalizarEmail(String valor) {
+		return valor == null ? "" : valor.toLowerCase(java.util.Locale.ROOT);
 	}
 }
-

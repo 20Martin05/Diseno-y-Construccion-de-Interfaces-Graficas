@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,9 @@ import vista.ventana;
 // Validación y operaciones CRUD sobre la lista de contactos. Muestra los mensajes al usuario.
 public class ContactosControlador {
     private static final Logger LOGGER = Logger.getLogger(ContactosControlador.class.getName());
+    private static final Pattern NOMBRE_VALIDO = Pattern.compile("[\\p{L} .'-]{2,80}");
+    private static final Pattern TELEFONO_VALIDO = Pattern.compile("\\d{7,15}");
+    private static final Pattern EMAIL_VALIDO = Pattern.compile("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
 
     private final ventana delegado;
     private final List<Persona> contactos;
@@ -45,15 +49,15 @@ public class ContactosControlador {
             info(t("msg.campos.vacios", "Todos los campos deben ser llenados."));
             return false;
         }
-        if (!nombres.matches("[\\p{L} .'-]{2,80}")) {
+        if (!NOMBRE_VALIDO.matcher(nombres).matches()) {
             info(t("msg.nombre.invalido", "El nombre contiene caracteres no válidos."));
             return false;
         }
-        if (!telefono.matches("\\d{7,15}")) {
+        if (!TELEFONO_VALIDO.matcher(telefono).matches()) {
             info(t("msg.telefono.invalido", "El teléfono debe contener entre 7 y 15 dígitos."));
             return false;
         }
-        if (!email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+        if (!EMAIL_VALIDO.matcher(email).matches()) {
             info(t("msg.email.invalido", "Ingrese un correo electrónico válido."));
             return false;
         }
